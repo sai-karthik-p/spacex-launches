@@ -24,5 +24,6 @@
 </ul><ul>
 <li>After applying the filter, the URL changes so that if the user copies the URL and sends it to a friend then the friend can see the data with the filter applied. In other words when the page is refreshed then the filter will not be removed</li>
 </ul><h5>Steps</h5><ul>
+<li><code>npm install</code> to install all dependencies.</li>
 <li><code>npm run dev</code> to run the app in the development mode.</li>
 </ul>
