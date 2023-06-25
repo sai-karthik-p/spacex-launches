@@ -3,9 +3,26 @@
 }
 
 .css-tqj0yt-MuiTypography-root-MuiDialogTitle-root {
-    padding: 16px 24px 0 24px !important;
+    padding: 0 !important;
+}
+
+.css-djcg5u-MuiButtonBase-root-MuiIconButton-root {
+    padding: 16px !important;
 }
 
 .css-hhvo2v-MuiListItem-root {
     padding: 8px 16px 8px 0 !important;
+}
+
+.iconLinks {
+    text-decoration: none;
+}
+
+.alert {
+    font-weight: bold !important;
+    border-radius: 24px !important;
+    width: max-content;
+    padding: 0 1.5rem;
+    scale: 0.7;
+    letter-spacing: 1px !important;
 }

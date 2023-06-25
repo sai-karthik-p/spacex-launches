@@ -7,16 +7,18 @@ import Loader from './assets/Loader';
 import Grid from './components/Grid';
 import DetailsModal from './components/DetailsModal';
 import { removeDuplicates, getFilteredData } from './utils/utils';
+import { useSearchParams } from 'react-router-dom';
 
 export default function SpacexLaunches() {
 
+    const [searchParams] = useSearchParams();
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedRowData, setSelectedRowData] = useState<any>(null);
     const [showModal, setShowModal] = useState(false);
-    const [monthsFilter, setMonthsFilter] = useState('allTime');
-    const [launchesFilter, setLaunchesFilter] = useState('allLaunches');
+    const [monthsFilter, setMonthsFilter] = useState(searchParams.get("monthsfilter") || "allTime");
+    const [launchesFilter, setLaunchesFilter] = useState(searchParams.get("launchesfilter") || "allLaunches");
 
     useEffect(() => {
         const getData = async () => {

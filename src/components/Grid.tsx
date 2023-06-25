@@ -194,7 +194,7 @@ export default function Grid({gridData, setSelectedRowData, setShowModal}: IGrid
                     },
                 },
                 }}
-                pageSizeOptions={[5]}
+                pageSizeOptions={[12]}
                 disableRowSelectionOnClick
                 slots={{
                     noRowsOverlay: CustomNoRowsOverlay,

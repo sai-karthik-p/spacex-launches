@@ -3,6 +3,7 @@ import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useSearchParams } from 'react-router-dom';
 
 interface IFiltersProps {
     monthsFilter: string;
@@ -13,12 +14,16 @@ interface IFiltersProps {
 
 export default function Filters({monthsFilter, setMonthsFilter, launchesFilter, setLaunchesFilter}: IFiltersProps) {
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const handleMonthsFilterChange = (event: SelectChangeEvent) => {
     setMonthsFilter(event.target.value);
+    setSearchParams({monthsfilter: event.target.value, launchesfilter: launchesFilter});
   };
 
   const handleLaunchesFilterChange = (event: SelectChangeEvent) => {
     setLaunchesFilter(event.target.value);
+    setSearchParams({monthsfilter: monthsFilter, launchesfilter: event.target.value});
   };
 
   return (

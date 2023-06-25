@@ -19,13 +19,7 @@ const getStatusLabel = (launch_success: boolean | null) => {
     if (launch_success === null) {
       return (
         <Alert
-          sx={{
-            fontWeight: 'medium',
-            borderRadius: 6,
-            width: 'max-content',
-            padding: '0 1.5rem',
-            scale: '0.7',
-          }}
+          className="alert"
           icon={false}
           severity="warning"
         >
@@ -35,13 +29,7 @@ const getStatusLabel = (launch_success: boolean | null) => {
     } else if (launch_success) {
       return (
         <Alert
-          sx={{
-            fontWeight: 'medium',
-            borderRadius: 6,
-            width: 'max-content',
-            padding: '0 1.5rem',
-            scale: '0.7',
-          }}
+          className="alert"
           icon={false}
           severity="success"
         >
@@ -51,13 +39,7 @@ const getStatusLabel = (launch_success: boolean | null) => {
     } else {
       return (
         <Alert
-          sx={{
-            fontWeight: 'medium',
-            borderRadius: 6,
-            width: 'max-content',
-            padding: '0 1.5rem',
-            scale: '0.7',
-          }}
+          className="alert"
           icon={false}
           severity="error"
         >
@@ -103,7 +85,6 @@ export default function DetailsModal({showModal, setShowModal, selectedRowData}:
                 id="scroll-dialog-title"
                 sx={{ display: 'flex', alignItems: 'center'}}
                 >
-                    {selectedRowData.mission_name} {getStatusLabel(selectedRowData.launch_success)}
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
                         <CloseIcon />
                     </IconButton>
@@ -115,9 +96,19 @@ export default function DetailsModal({showModal, setShowModal, selectedRowData}:
                         ref={descriptionElementRef}
                         tabIndex={-1}
                     >
-                        <small>{selectedRowData.rocket.rocket_name}</small>
-                        <div> {selectedRowData.links.presskit && <a href={selectedRowData.links.presskit} target="_blank" rel="noopener noreferrer"> <NasaIcon fontSize="small" style={{color:'grey'}}  /> </a>}  {selectedRowData.links.wikipedia && <a href={selectedRowData.links.wikipedia} target="_blank" rel="noopener noreferrer"> <WikipediaIcon style={{color:'grey', margin: '0 auto'}}  /> </a>}  {selectedRowData.links.video_link && <a href={selectedRowData.links.video_link} target="_blank" rel="noopener noreferrer"> <YouTubeIcon fontSize="small" style={{color:'grey'}}  /> </a>}  </div>
-                        <span> {selectedRowData.details} </span> <a href={selectedRowData.links.wikipedia} target="_blank" rel="noopener noreferrer">Wikipedia</a>
+                        <div style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'row'}}>
+                            {selectedRowData.links.mission_patch_small && <img src={selectedRowData.links.mission_patch_small} alt="" width="100" height="100"/>}
+                            <div style={{marginLeft: '2rem'}}>
+                                <div style={{display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
+                                    <h4 style={{marginBlockStart: "0px", marginBlockEnd: "0px"}}>{selectedRowData.mission_name}</h4> 
+                                    {getStatusLabel(selectedRowData.launch_success)}
+                                </div>
+                                <div> <small>{selectedRowData.rocket.rocket_name}</small> </div>
+                                <div style={{marginTop: '10px'}}> {selectedRowData.links.presskit && <a className='iconLinks' href={selectedRowData.links.presskit} target="_blank" rel="noopener noreferrer"> <NasaIcon fontSize="small" style={{color:'grey'}}  /> </a>}  {selectedRowData.links.wikipedia && <a className='iconLinks' href={selectedRowData.links.wikipedia} target="_blank" rel="noopener noreferrer"> <WikipediaIcon style={{color:'grey', margin: '0 auto'}}  /> </a>}  {selectedRowData.links.video_link && <a className='iconLinks' href={selectedRowData.links.video_link} target="_blank" rel="noopener noreferrer"> <YouTubeIcon fontSize="small" style={{color:'grey'}}  /> </a>}  </div>
+                            </div>
+                        </div>
+                        
+                        <div style={{marginTop: '1.25rem'}}><span> {selectedRowData.details} </span> <a href={selectedRowData.links.wikipedia} target="_blank" rel="noopener noreferrer">Wikipedia</a></div>
                         <List sx={{ width: '100%', minWidth: 360, bgcolor: 'background.paper' }}>
                             <ListItem alignItems="flex-start">
                                 <ListItemText
