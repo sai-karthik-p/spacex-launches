@@ -4,10 +4,14 @@ import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-export default function Filters() {
-  const [monthsFilter, setMonthsFilter] = React.useState('pastSixMonths');
+interface IFiltersProps {
+    monthsFilter: string;
+    setMonthsFilter: React.Dispatch<React.SetStateAction<string>>;
+    launchesFilter: string; 
+    setLaunchesFilter: React.Dispatch<React.SetStateAction<string>>;
+}
 
-  const [launchesFilter, setLaunchesFilter] = React.useState('allLaunches');
+export default function Filters({monthsFilter, setMonthsFilter, launchesFilter, setLaunchesFilter}: IFiltersProps) {
 
   const handleMonthsFilterChange = (event: SelectChangeEvent) => {
     setMonthsFilter(event.target.value);
@@ -43,8 +47,11 @@ export default function Filters() {
             onChange={handleMonthsFilterChange}
             inputProps={{ 'aria-label': 'Without label' }}
           >
-            <MenuItem value={'pastSixMonths'}>Past Six Months</MenuItem>
+            <MenuItem value={'allTime'}>All Time</MenuItem>
             <MenuItem value={'lastSixMonths'}>Last Six Months</MenuItem>
+            <MenuItem value={'lastOneYear'}>Last One Year</MenuItem>
+            <MenuItem value={'lastFiveYears'}>Last Five Years</MenuItem>
+            <MenuItem value={'lastTenYears'}>Last Ten Years</MenuItem>
           </Select>
         </div>
 
@@ -66,9 +73,7 @@ export default function Filters() {
           >
             <MenuItem value={'allLaunches'}>All Launches</MenuItem>
             <MenuItem value={'upcomingLaunches'}>Upcoming Launches</MenuItem>
-            <MenuItem value={'successfulLaunches'}>
-              Successful Launches
-            </MenuItem>
+            <MenuItem value={'successfulLaunches'}>Successful Launches</MenuItem>
             <MenuItem value={'failedLaunches'}>Failed Launches</MenuItem>
           </Select>
         </div>

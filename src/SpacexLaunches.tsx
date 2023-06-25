@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Header from './components/Header';
@@ -6,24 +6,17 @@ import Filters from './components/Filters';
 import Loader from './assets/Loader';
 import Grid from './components/Grid';
 import DetailsModal from './components/DetailsModal';
+import { removeDuplicates, getFilteredData } from './utils/utils';
 
-function removeDuplicates(inputArray: any) {
-    const uniqueArray = Array.from(
-      new Set(inputArray.map((a: any) => a.flight_number))
-    ).map((flight_number) => {
-      return inputArray.find((a: any) => a.flight_number === flight_number);
-    });
-    return uniqueArray;
-}
-  
+export default function SpacexLaunches() {
 
-function SpacexLaunches() {
-
-    const [data, setData] = useState(null);
+    const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [selectedRowData, setSelectedRowData] = useState(null);
+    const [selectedRowData, setSelectedRowData] = useState<any>(null);
     const [showModal, setShowModal] = useState(false);
+    const [monthsFilter, setMonthsFilter] = useState('allTime');
+    const [launchesFilter, setLaunchesFilter] = useState('allLaunches');
 
     useEffect(() => {
         const getData = async () => {
@@ -37,12 +30,10 @@ function SpacexLaunches() {
                 );
             }
             const actualData = await response.json();
-
             const uniqueData = removeDuplicates(actualData);
-
             setData(uniqueData);
             setError(null);
-            } catch(err) {
+            } catch(err: any) {
             setError(err.message);
             setData(null);
             } finally {
@@ -50,32 +41,28 @@ function SpacexLaunches() {
             }  
         }
         getData()
-    }, [])
+    }, []);
 
     return (
         <>
             <Header />
             <Container>
                 <Box sx={{ width: '100%' }}>
-
                     {loading && <Loader />}
-
                     {error && (
-                        <div>{`There is a problem fetching the post data - ${error}`}</div>
+                        <div>{`There is a problem fetching the Launches data - ${error}`}</div>
                     )}
-
-                    {data && <Filters />}
-
-
-                    {data && <Grid gridData={data} setSelectedRowData={setSelectedRowData} setShowModal={setShowModal} />}
-
-                    {showModal && <DetailsModal showModal={showModal} setShowModal={setShowModal} selectedRowData={selectedRowData} />}
-
-                    
+                    {data && (
+                        <Filters monthsFilter={monthsFilter} setMonthsFilter={setMonthsFilter} launchesFilter={launchesFilter} setLaunchesFilter={setLaunchesFilter} />
+                    )}
+                    {data && (
+                        <Grid gridData={getFilteredData(data, launchesFilter, monthsFilter)} setSelectedRowData={setSelectedRowData} setShowModal={setShowModal} />
+                    )}
+                    {showModal && (
+                        <DetailsModal showModal={showModal} setShowModal={setShowModal} selectedRowData={selectedRowData} />
+                    )}
                 </Box>
             </Container>
         </>
     );
-}
-
-export default SpacexLaunches;
+};

@@ -1,4 +1,5 @@
 import { DialogContentText, DialogTitle, IconButton } from '@mui/material';
+import WikipediaIcon from '../assets/WikipediaIcon';
 import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -9,9 +10,10 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import LaunchIcon from '@mui/icons-material/Launch';
 import React, {useEffect, useRef} from 'react';
 import { getFormattedDate } from '../utils/utils';
+import NasaIcon from '../assets/NasaIcon';
+import "./DetailsModal.css";
 
 const getStatusLabel = (launch_success: boolean | null) => {
     if (launch_success === null) {
@@ -22,6 +24,7 @@ const getStatusLabel = (launch_success: boolean | null) => {
             borderRadius: 6,
             width: 'max-content',
             padding: '0 1.5rem',
+            scale: '0.7',
           }}
           icon={false}
           severity="warning"
@@ -37,6 +40,7 @@ const getStatusLabel = (launch_success: boolean | null) => {
             borderRadius: 6,
             width: 'max-content',
             padding: '0 1.5rem',
+            scale: '0.7',
           }}
           icon={false}
           severity="success"
@@ -52,6 +56,7 @@ const getStatusLabel = (launch_success: boolean | null) => {
             borderRadius: 6,
             width: 'max-content',
             padding: '0 1.5rem',
+            scale: '0.7',
           }}
           icon={false}
           severity="error"
@@ -62,7 +67,13 @@ const getStatusLabel = (launch_success: boolean | null) => {
     }
 };
 
-export default function DetailsModal({showModal, setShowModal, selectedRowData}) {
+interface IDetailsModalProps {
+    showModal: boolean;
+    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+    selectedRowData: any;
+}
+
+export default function DetailsModal({showModal, setShowModal, selectedRowData}: IDetailsModalProps) {
 
     const descriptionElementRef = useRef<HTMLElement>(null);
     useEffect(() => {
@@ -90,21 +101,23 @@ export default function DetailsModal({showModal, setShowModal, selectedRowData})
             >
                 <DialogTitle
                 id="scroll-dialog-title"
-                sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}
+                sx={{ display: 'flex', alignItems: 'center'}}
                 >
                     {selectedRowData.mission_name} {getStatusLabel(selectedRowData.launch_success)}
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
+
                 <DialogContent dividers={false}>
                     <DialogContentText
                         id="scroll-dialog-description"
                         ref={descriptionElementRef}
                         tabIndex={-1}
                     >
-                        <div> {selectedRowData.links.video_link && <a href={selectedRowData.links.video_link} target="_blank" rel="noopener noreferrer"> <YouTubeIcon fontSize="small" style={{color:'grey'}}  /> </a>}  {selectedRowData.links.presskit && <a href={selectedRowData.links.presskit} target="_blank" rel="noopener noreferrer"> <LaunchIcon fontSize="small" style={{color:'grey'}}  /> </a>}  </div>
-                        {selectedRowData.details} <a href={selectedRowData.links.wikipedia} target="_blank" rel="noopener noreferrer">Wikipedia</a>
+                        <small>{selectedRowData.rocket.rocket_name}</small>
+                        <div> {selectedRowData.links.presskit && <a href={selectedRowData.links.presskit} target="_blank" rel="noopener noreferrer"> <NasaIcon fontSize="small" style={{color:'grey'}}  /> </a>}  {selectedRowData.links.wikipedia && <a href={selectedRowData.links.wikipedia} target="_blank" rel="noopener noreferrer"> <WikipediaIcon style={{color:'grey', margin: '0 auto'}}  /> </a>}  {selectedRowData.links.video_link && <a href={selectedRowData.links.video_link} target="_blank" rel="noopener noreferrer"> <YouTubeIcon fontSize="small" style={{color:'grey'}}  /> </a>}  </div>
+                        <span> {selectedRowData.details} </span> <a href={selectedRowData.links.wikipedia} target="_blank" rel="noopener noreferrer">Wikipedia</a>
                         <List sx={{ width: '100%', minWidth: 360, bgcolor: 'background.paper' }}>
                             <ListItem alignItems="flex-start">
                                 <ListItemText

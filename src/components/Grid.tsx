@@ -4,16 +4,35 @@ import Alert from '@mui/material/Alert';
 import './Grid.css';
 import { getFormattedDate } from '../utils/utils';
 
+const CustomNoRowsOverlay = () => {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          mt: 1,
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+        }}
+      >
+        No results found for the specified filter
+      </Box>
+    );
+};
+
+const statusLabelStyle = {
+    fontWeight: 'medium',
+    borderRadius: 6,
+    width: 'max-content',
+    padding: '0 1.5rem',
+};
+
 const getStatusLabel = (launch_success: boolean | null) => {
   if (launch_success === null) {
     return (
       <Alert
-        sx={{
-          fontWeight: 'medium',
-          borderRadius: 6,
-          width: 'max-content',
-          padding: '0 1.5rem',
-        }}
+        sx={statusLabelStyle}
         icon={false}
         severity="warning"
       >
@@ -23,12 +42,7 @@ const getStatusLabel = (launch_success: boolean | null) => {
   } else if (launch_success) {
     return (
       <Alert
-        sx={{
-          fontWeight: 'medium',
-          borderRadius: 6,
-          width: 'max-content',
-          padding: '0 1.5rem',
-        }}
+        sx={statusLabelStyle}
         icon={false}
         severity="success"
       >
@@ -38,12 +52,7 @@ const getStatusLabel = (launch_success: boolean | null) => {
   } else {
     return (
       <Alert
-        sx={{
-          fontWeight: 'medium',
-          borderRadius: 6,
-          width: 'max-content',
-          padding: '0 1.5rem',
-        }}
+        sx={statusLabelStyle}
         icon={false}
         severity="error"
       >
@@ -146,7 +155,13 @@ const columns: GridColDef[] = [
   },
 ];
 
-export default function Grid({gridData, setSelectedRowData, setShowModal}) {
+interface IGridProps {
+    gridData: any;
+    setSelectedRowData: any;
+    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function Grid({gridData, setSelectedRowData, setShowModal}: IGridProps) {
 
     const handleRowClick: GridEventListener<'rowClick'> = (params) => {
         setSelectedRowData(params.row);
@@ -155,34 +170,36 @@ export default function Grid({gridData, setSelectedRowData, setShowModal}) {
 
     return (
         <Box
-          sx={{
+            sx={{
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
             textAlign: 'center',
             marginBottom:'2rem'
-          }}
+            }}
         >
-          <DataGrid
-            onRowClick={handleRowClick}
-            sx={{
-              boxShadow: 2,
-            }}
-            getRowId={(row) => row.flight_number}
-            rows={gridData}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 12,
+            <DataGrid
+                autoHeight
+                onRowClick={handleRowClick}
+                sx={{
+                boxShadow: 2,
+                }}
+                getRowId={(row) => row.flight_number}
+                rows={gridData}
+                columns={columns}
+                initialState={{
+                pagination: {
+                    paginationModel: {
+                    pageSize: 12,
+                    },
                 },
-              },
-            }}
-            pageSizeOptions={[5]}
-            disableRowSelectionOnClick
-          />
+                }}
+                pageSizeOptions={[5]}
+                disableRowSelectionOnClick
+                slots={{
+                    noRowsOverlay: CustomNoRowsOverlay,
+                }}
+            />
         </Box>
       );
-
-  
 }

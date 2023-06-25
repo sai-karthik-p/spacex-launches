@@ -1,6 +1,4 @@
-import React from 'react';
-
-function SpacexLogo() {
+export default function  SpacexLogo() {
   return (
     <>
       <svg
@@ -76,5 +74,3 @@ function SpacexLogo() {
     </>
   );
 }
-
-export default React.memo(SpacexLogo);
