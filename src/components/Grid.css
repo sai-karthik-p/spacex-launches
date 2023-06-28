@@ -1,8 +1,13 @@
 .css-cczics-MuiDataGrid-root .MuiDataGrid-withBorderColor {
     border: none !important;
-    cursor: pointer;
+    cursor: pointer !important;
+}
+
+.css-sb5iof .MuiDataGrid-cell {
+    border-bottom: none !important;
 }
 
 .grid-headeer-class {
-    background-color: rgb(245, 245, 245);
-}  
+    background-color: rgb(245, 245, 245) !important;
+    cursor: pointer !important;
+}
