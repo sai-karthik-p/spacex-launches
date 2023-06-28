@@ -11,7 +11,7 @@ import { useSearchParams } from 'react-router-dom';
 
 export default function SpacexLaunches() {
 
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -55,7 +55,7 @@ export default function SpacexLaunches() {
                         <div>{`There is a problem fetching the Launches data - ${error}`}</div>
                     )}
                     {data && (
-                        <Filters monthsFilter={monthsFilter} setMonthsFilter={setMonthsFilter} launchesFilter={launchesFilter} setLaunchesFilter={setLaunchesFilter} />
+                        <Filters monthsFilter={monthsFilter} setMonthsFilter={setMonthsFilter} launchesFilter={launchesFilter} setLaunchesFilter={setLaunchesFilter} setSearchParams={setSearchParams} />
                     )}
                     {data && (
                         <Grid gridData={getFilteredData(data, launchesFilter, monthsFilter)} setSelectedRowData={setSelectedRowData} setShowModal={setShowModal} />
