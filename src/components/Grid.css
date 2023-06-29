@@ -3,6 +3,10 @@
     cursor: pointer !important;
 }
 
+.css-sb5iof {
+    border: none !important;
+}
+
 .css-sb5iof .MuiDataGrid-cell {
     border-bottom: none !important;
 }
